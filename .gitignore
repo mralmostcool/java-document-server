@@ -1,0 +1,26 @@
+# Build artifacts
+target/
+build/
+.gradle/
+*.class
+*.jar
+*.war
+
+# Environment & credentials
+.env
+*.env.local
+*.key
+*.pem
+credentials.json
+
+# IDE / Editor
+.idea/
+*.iml
+.vscode/
+*.swp
+.DS_Store
+
+# Logs
+*.log
+logs/
+
