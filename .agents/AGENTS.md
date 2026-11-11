@@ -1,6 +1,7 @@
 # AGENTS.md - Workspace Rules & Guardrails
 
 ## STRICT BOUNDARY GUARDRAIL: SCOPE OF WORK
+- Never access anything outside the current working directory.
 - Operate exclusively within project root: `c:\Users\Neeraj Gupta\Projects\mralmostcool\java-document-server`.
 - Never create, modify, inspect, or delete files outside project root.
 - Do not run commands targeting directories outside workspace boundary.
