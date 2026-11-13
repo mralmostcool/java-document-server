@@ -1,0 +1,23 @@
+:root{--bg:#f4f5f2;--paper:#fff;--ink:#14202b;--mute:#5b6773;--line:#d9ddd6;--seal:#0b6e69;--seal-ink:#fff;--bad:#b42318;color-scheme:light dark}
+@media (prefers-color-scheme:dark){:root{--bg:#10171d;--paper:#18222a;--ink:#e8edf0;--mute:#97a4ae;--line:#2b3842;--seal:#4fc3b9;--seal-ink:#06201e;--bad:#ff8a7a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:38rem;margin:0 auto;padding:clamp(1.5rem,6vw,4rem) 1.25rem}
+h1{font:600 2rem/1.15 "Iowan Old Style",Georgia,serif;margin:0 0 .5rem;letter-spacing:-.01em}
+.sheet{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:1.5rem;margin-top:1.5rem}
+label{display:block;font-weight:600;margin:1rem 0 .35rem}
+label.check{display:flex;gap:.6rem;align-items:flex-start;font-weight:400}
+input[type=text],input[type=email]{width:100%;padding:.65rem .75rem;font:inherit;color:inherit;background:var(--bg);border:1px solid var(--line);border-radius:4px}
+button{font:inherit;font-weight:600;padding:.7rem 1.1rem;border-radius:4px;border:1px solid var(--seal);background:var(--seal);color:var(--seal-ink);cursor:pointer}
+button.ghost{background:transparent;color:var(--seal)}
+button:disabled{opacity:.55;cursor:wait}
+a{color:var(--seal)}
+:focus-visible{outline:3px solid var(--seal);outline-offset:2px}
+.row{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.25rem}
+.mute{color:var(--mute)}
+.hash{font:.8rem ui-monospace,monospace;word-break:break-all}
+.msg{margin-top:1rem}.bad{color:var(--bad)}
+.top{display:flex;justify-content:space-between;align-items:start;gap:1rem}
+.seal{display:grid;place-items:center;width:4.5rem;height:4.5rem;border:3px solid var(--seal);border-radius:50%;color:var(--seal);font-size:2rem;animation:stamp .4s ease-out}
+@keyframes stamp{from{transform:scale(1.6) rotate(-12deg);opacity:0}}
+@media (prefers-reduced-motion:reduce){.seal{animation:none}}

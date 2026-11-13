@@ -56,3 +56,18 @@ services:
       DEV_SECURITY_PASSWORD: ${DEV_SECURITY_PASSWORD:-admin}
     ports:
       - "${SERVER_PORT:-8080}:${SERVER_PORT:-8080}"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: examportal-frontend
+    restart: on-failure
+    depends_on:
+      - backend
+    environment:
+      PORT: ${FRONTEND_PORT:-3000}
+      BACKEND_URL: ${BACKEND_URL:-http://backend:8080}
+      PUBLIC_ORIGIN: ${PUBLIC_ORIGIN:-http://localhost:3000}
+    ports:
+      - "${FRONTEND_PORT:-3000}:${FRONTEND_PORT:-3000}"
