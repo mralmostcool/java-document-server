@@ -59,26 +59,21 @@ management:
   endpoints:
     web:
       exposure:
-        include: "mappings,health,info,scalar"
+        include: "health,info"
   endpoint:
     health:
+      show-details: when_authorized
       probes:
         enabled: true
   info:
     env:
-      enabled: true
+      enabled: false
 
 scalar:
-  enabled: true
-  url: "/v3/api-docs"
-  theme: "deepSpace"
-  layout: "modern"
-  documentDownloadType: "both"
-  actuatorEnabled: true
+  enabled: false
 
 springdoc:
-  api-docs:
-    path: /v3/api-docs
   swagger-ui:
-    path: /swagger-ui.html
-  show-actuator: true
+    enabled: false
+  api-docs:
+    enabled: false

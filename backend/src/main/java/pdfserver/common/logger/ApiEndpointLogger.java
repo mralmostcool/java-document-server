@@ -19,6 +19,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
+@org.springframework.context.annotation.Profile("dev")
 public class ApiEndpointLogger {
 
         private static final Logger log = LoggerFactory.getLogger(ApiEndpointLogger.class);
