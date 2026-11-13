@@ -5,6 +5,7 @@ build/
 *.class
 *.jar
 *.war
+*.zip
 
 # Environment & credentials
 .env
