@@ -24,10 +24,7 @@ USER appuser
 COPY --from=builder /app/target/*.jar app.jar
 
 ENV SERVER_PORT=8080
-ENV SPRING_PROFILES_ACTIVE=dev
-ENV DEV_SECURITY_USER=admin
-ENV DEV_SECURITY_PASSWORD=admin
 
 EXPOSE ${SERVER_PORT}
 
-ENTRYPOINT ["sh", "-c", "java -Dserver.port=${SERVER_PORT} -Dspring.profiles.active=${SPRING_PROFILES_ACTIVE} -jar app.jar"]
+ENTRYPOINT ["sh", "-c", "java -Dserver.port=${SERVER_PORT} -Dspring.profiles.active=${SPRING_PROFILES_ACTIVE:-default} -jar app.jar"]

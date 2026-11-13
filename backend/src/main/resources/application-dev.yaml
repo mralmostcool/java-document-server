@@ -8,10 +8,6 @@ spring:
   jpa:
     show-sql: true
 
-  security:
-    user:
-      name: ${DEV_SECURITY_USER:admin}
-      password: ${DEV_SECURITY_PASSWORD:admin}
 
 springdoc:
   swagger-ui:
