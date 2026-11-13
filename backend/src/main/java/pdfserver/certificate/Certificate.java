@@ -58,6 +58,7 @@ public class Certificate {
     @Builder.Default
     private Instant signedAt = Instant.now();
 
+    @org.hibernate.annotations.Type(pdfserver.common.data.InetType.class)
     @Column(name = "ip", columnDefinition = "inet")
     private String ip;
 
@@ -79,6 +80,7 @@ public class Certificate {
     @Column(name = "storage_key", nullable = false, length = 512)
     private String storageKey;
 
+    @org.hibernate.annotations.JdbcTypeCode(java.sql.Types.CHAR)
     @Column(name = "sha256", nullable = false, length = 64)
     private String sha256;
 

@@ -46,6 +46,7 @@ public class Document {
     @Column(name = "size_bytes", nullable = false)
     private Long sizeBytes;
 
+    @org.hibernate.annotations.JdbcTypeCode(java.sql.Types.CHAR)
     @Column(name = "sha256", nullable = false, length = 64)
     private String sha256;
 

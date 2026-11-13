@@ -37,6 +37,7 @@ public class AuditLog {
     @Column(name = "user_id")
     private UUID userId;
 
+    @org.hibernate.annotations.Type(pdfserver.common.data.InetType.class)
     @Column(name = "ip", columnDefinition = "inet")
     private String ip;
 
