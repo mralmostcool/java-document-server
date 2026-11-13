@@ -1,6 +1,6 @@
 spring:
   application:
-    name: pdfserver
+    name: java-document-server
 
   threads:
     virtual:

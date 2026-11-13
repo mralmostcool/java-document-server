@@ -27,4 +27,4 @@ ENV SERVER_PORT=8080
 
 EXPOSE ${SERVER_PORT}
 
-ENTRYPOINT ["sh", "-c", "java -Dserver.port=${SERVER_PORT} -Dspring.profiles.active=${SPRING_PROFILES_ACTIVE:-default} -jar app.jar"]
+ENTRYPOINT ["sh", "-c", "exec java -Dserver.port=${SERVER_PORT} -Dspring.profiles.active=${SPRING_PROFILES_ACTIVE:-default} -jar app.jar"]
