@@ -50,8 +50,10 @@ server:
 
 logging:
   level:
-    org.flywaydb: DEBUG
-    org.hibernate.SQL: WARN
+    org:
+      flywaydb: DEBUG
+      hibernate:
+        SQL: WARN
 
 management:
   endpoints:
