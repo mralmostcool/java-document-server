@@ -21,16 +21,16 @@ import java.util.List;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JsonAuthenticationEntryPoint authenticationEntryPoint;
     private final JsonAccessDeniedHandler accessDeniedHandler;
+    private final org.springframework.core.convert.converter.Converter<org.springframework.security.oauth2.jwt.Jwt, ? extends org.springframework.security.authentication.AbstractAuthenticationToken> jwtAuthenticationConverter;
 
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter,
-                          JsonAuthenticationEntryPoint authenticationEntryPoint,
-                          JsonAccessDeniedHandler accessDeniedHandler) {
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+    public SecurityConfig(JsonAuthenticationEntryPoint authenticationEntryPoint,
+                          JsonAccessDeniedHandler accessDeniedHandler,
+                          org.springframework.core.convert.converter.Converter<org.springframework.security.oauth2.jwt.Jwt, ? extends org.springframework.security.authentication.AbstractAuthenticationToken> jwtAuthenticationConverter) {
         this.authenticationEntryPoint = authenticationEntryPoint;
         this.accessDeniedHandler = accessDeniedHandler;
+        this.jwtAuthenticationConverter = jwtAuthenticationConverter;
     }
 
     private static final String[] PUBLIC_ENDPOINTS = {
@@ -62,7 +62,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
                         .anyRequest().authenticated())
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .oauth2ResourceServer(oauth2 -> oauth2
+                        .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter))
+                        .authenticationEntryPoint(authenticationEntryPoint)
+                        .accessDeniedHandler(accessDeniedHandler))
                 .build();
     }
 

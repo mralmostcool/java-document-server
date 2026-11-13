@@ -76,6 +76,10 @@ springdoc:
     enabled: false
 
 app:
+  jwt:
+    issuer: java-document-server
+    ttl: 15m
+    secret: ${JWT_SECRET:defaultsecretkeyatleast32characterslongforhs256!}
   s3:
     endpoint: ${S3_ENDPOINT:http://localhost:8333}
     region: ${S3_REGION:us-east-1}
