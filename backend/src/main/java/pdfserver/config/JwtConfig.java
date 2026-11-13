@@ -46,7 +46,9 @@ public class JwtConfig {
         OAuth2TokenValidator<Jwt> withIssuer = new OAuth2TokenValidator<>() {
             @Override
             public OAuth2TokenValidatorResult validate(Jwt token) {
-                if (properties.issuer().equals(token.getIssuer() != null ? token.getIssuer().toString() : null)) {
+                Object iss = token.getClaims().get("iss");
+                String issuerStr = iss != null ? iss.toString() : null;
+                if (properties.issuer().equals(issuerStr)) {
                     return OAuth2TokenValidatorResult.success();
                 }
                 return OAuth2TokenValidatorResult.failure(new OAuth2Error("invalid_issuer", "Invalid token issuer", null));

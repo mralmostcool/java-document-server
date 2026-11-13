@@ -153,8 +153,9 @@ public class WebAuthnService {
             String serializedOptions = creationOptions.toJson();
             challengeStore.save(requestId, serializedOptions);
 
-            JsonNode optionsNode = objectMapper.readTree(serializedOptions);
-            return new WebAuthnStartResponse(requestId, optionsNode);
+            @SuppressWarnings("unchecked")
+            Map<String, Object> optionsMap = objectMapper.readValue(serializedOptions, Map.class);
+            return new WebAuthnStartResponse(requestId, optionsMap);
         } catch (Exception e) {
             throw new IllegalStateException("Failed to serialize registration options", e);
         }
@@ -173,6 +174,8 @@ public class WebAuthnService {
             String credJson = objectMapper.writeValueAsString(request.credential());
             pkc = PublicKeyCredential.parseRegistrationResponseJson(credJson);
         } catch (Exception e) {
+            Map<String, Object> details = Map.of("reason", "malformed_registration_credential", "error", e.getMessage(), "userAgent", userAgent != null ? userAgent : "");
+            auditLogService.log("REGISTER_FAILURE", null, ip, correlationId, details);
             throw new BadCredentialsException("Malformed registration credential", e);
         }
 
@@ -183,6 +186,8 @@ public class WebAuthnService {
                     .response(pkc)
                     .build());
         } catch (Exception e) {
+            Map<String, Object> details = Map.of("reason", "registration_verification_failed", "error", e.getMessage(), "userAgent", userAgent != null ? userAgent : "");
+            auditLogService.log("REGISTER_FAILURE", null, ip, correlationId, details);
             throw new BadCredentialsException("WebAuthn registration verification failed: " + e.getMessage(), e);
         }
 
@@ -229,8 +234,15 @@ public class WebAuthnService {
             String serializedRequest = assertionRequest.toJson();
             challengeStore.save(requestId, serializedRequest);
 
-            JsonNode optionsNode = objectMapper.readTree(assertionRequest.toCredentialsGetJson());
-            return new WebAuthnStartResponse(requestId, optionsNode);
+            // assertionRequest.toCredentialsGetJson() produces: { "publicKey": { "challenge": ..., "rpId": ... } }
+            // Unwrap "publicKey" if present, or provide the map directly
+            @SuppressWarnings("unchecked")
+            Map<String, Object> credGetMap = objectMapper.readValue(assertionRequest.toCredentialsGetJson(), Map.class);
+            @SuppressWarnings("unchecked")
+            Map<String, Object> optionsMap = credGetMap.containsKey("publicKey") && credGetMap.get("publicKey") instanceof Map
+                    ? (Map<String, Object>) credGetMap.get("publicKey")
+                    : credGetMap;
+            return new WebAuthnStartResponse(requestId, optionsMap);
         } catch (Exception e) {
             throw new IllegalStateException("Failed to serialize assertion request", e);
         }

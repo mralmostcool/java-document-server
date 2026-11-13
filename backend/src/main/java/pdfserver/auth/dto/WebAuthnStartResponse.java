@@ -1,10 +1,10 @@
 package pdfserver.auth.dto;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import java.util.Map;
 
 public record WebAuthnStartResponse(
         String requestId,
-        JsonNode options
+        Map<String, Object> options
 ) {
 }
 
