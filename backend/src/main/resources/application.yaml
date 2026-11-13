@@ -80,6 +80,13 @@ app:
     issuer: java-document-server
     ttl: 15m
     secret: ${JWT_SECRET:defaultsecretkeyatleast32characterslongforhs256!}
+  auth:
+    open-registration: false
+  webauthn:
+    rp-id: ${WEBAUTHN_RP_ID:localhost}
+    rp-name: ${WEBAUTHN_RP_NAME:Java Document Server}
+    allowed-origins: ${WEBAUTHN_ALLOWED_ORIGINS:http://localhost:3000}
+    user-verification: ${WEBAUTHN_USER_VERIFICATION:preferred}
   s3:
     endpoint: ${S3_ENDPOINT:http://localhost:8333}
     region: ${S3_REGION:us-east-1}

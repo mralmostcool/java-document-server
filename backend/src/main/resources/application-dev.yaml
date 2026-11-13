@@ -33,6 +33,10 @@ management:
     health:
       show-details: always
 
+app:
+  auth:
+    open-registration: true
+
 logging:
   level:
     root: INFO
